@@ -16,6 +16,7 @@ public class UserDTO {
     private  Long idRol;
     @Email
     private String email;
+
     @Size (min = 8, message = "La contraseña debe ser de al menos de 8 caracteres")
     private String password;
     private Long idPosition;

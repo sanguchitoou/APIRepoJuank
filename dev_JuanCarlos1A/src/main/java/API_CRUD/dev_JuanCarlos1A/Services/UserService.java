@@ -7,14 +7,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository objRepo;
 
-    public List<UserDTO> getDataUser(){
+    public List<UserDTO> getAllUsers(){
+
         List<UserEntity> usuarios = objRepo.findAll(); //Nos quedamos aca
-        return null;
+        return usuarios.stream().map(this::convertirAUsuarioDTO).collect(Collectors.toList());
     }
+
+    public UserDTO convertirAUsuarioDTO(UserEntity usuario){
+        UserDTO objUserDTO = new UserDTO();
+        objUserDTO.setId(usuario.getId());
+        objUserDTO.setFirstName(usuario.getFirstName());
+        objUserDTO.setLastName(usuario.getLastName());
+        objUserDTO.setIdExpoGroup(usuario.getIdExpoGroup());
+        objUserDTO.setIdRol(usuario.getIdRol());
+        objUserDTO.setEmail(usuario.getEmail());
+        objUserDTO.setPassword(usuario.getPassword());
+        objUserDTO.setIdPosition(usuario.getIdPosition());
+        return objUserDTO;
+    }
+
 }
